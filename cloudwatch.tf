@@ -27,7 +27,7 @@
 #         ],
 #         "period": 180,
 #         "stat": "Average",
-#         "region": "us-east-1",
+#         "region": "ap-south-1",
 #         "stacked": true,
 #         "title": "EC2 Instance Disk Used"
 #       }
@@ -40,22 +40,7 @@
 
 # }
 
-# resource "aws_cloudwatch_metric_alarm" "cwma" {
-#   alarm_name          = "helav"
-#   alarm_description   = "This metric monitors ec2 cpu utilization"
-#   comparison_operator = "GreaterThanOrEqualToThreshold"
-#   metric_name         = "CPUUtilization"
-#   namespace           = "AWS/EC2"
-#   period              = 120
-#   evaluation_periods  = 2
-#   datapoints_to_alarm = 2
-#   statistic           = "Maximum"
-#   threshold           = 75
-#   alarm_actions       = [aws_sns_topic.topic.arn]
-#   dimensions = {
-#     instanceId = aws_instance.inst1.id
-#   }
-# }
+
 
 resource "aws_cloudwatch_metric_alarm" "cwma" {
   alarm_name                = "CPUUtilization"
@@ -80,8 +65,8 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
   evaluation_periods        = "1"
   metric_name               = "disk_used_percent"
   namespace                 = "CWAgent"
-  period                    = "300"
-  statistic                 = "Maximum"
+  period                    = "120"
+  statistic                 = "Average"
   threshold                 = "40"
   alarm_description         = "This metric monitors ec2 disk utilization"
   actions_enabled           = "true"
@@ -90,16 +75,12 @@ resource "aws_cloudwatch_metric_alarm" "foobar" {
   #treat_missing_data = "notBreaching"
 
   dimensions = {
-    path       = "/"
+    #     path       = "/"
     InstanceId = aws_instance.inst1.id
-    device     = "xvda1"
+    #     device     = "xvda1"
 
-    fstype = "xfs"
+    #     fstype = "xfs"
 
 
   }
-  # depends_on = [
-  #   aws_sns_topic.topic,
-  #   aws_sns_topic_subscription.email-target
-  # ]
 }
